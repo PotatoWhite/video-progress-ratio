@@ -4,36 +4,35 @@ package me.potato;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Main {
 
   public static void main(String[] args) {
     int totalDuration = 10;
     // duration seconds
-    List<View> views = new ArrayList<>();
-    views.add(new View(0, 4));
-    views.add(new View(8, 9));
+    List<Watch> Watches = new ArrayList<>();
+    Watches.add(new Watch(0, 4));
+    Watches.add(new Watch(8, 9));
 
 
-    System.out.println(getProgressRatio(totalDuration, views) / totalDuration * 100);
+    System.out.println(getProgressRate(totalDuration, Watches) / totalDuration * 100);
   }
 
 
-  private static double getProgressRatio(double totalDuration, List<View> views) {
-    double result = views.stream()
-            .map(view -> BigInteger.TWO.pow(view.end - view.start + 1).subtract(BigInteger.ONE)
-                    .shiftLeft(view.start))
+  private static double getProgressRate(double totalDuration, List<Watch> Watches) {
+    double result = Watches.stream()
+            .map(Watch -> BigInteger.TWO.pow(Watch.end - Watch.start + 1).subtract(BigInteger.ONE)
+                    .shiftLeft(Watch.start))
             .reduce(BigInteger.ZERO, BigInteger::or).bitCount()  ;
 
     return result  ;
   }
 
-  static class View {
+  static class Watch {
     private final int start;
     private final int end;
 
-    public View(int start, int end) {
+    public Watch(int start, int end) {
       if (start > end) {
         this.start = end;
         this.end   = start;
