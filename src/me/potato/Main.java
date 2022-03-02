@@ -24,7 +24,7 @@ public class Main {
     double result = views.stream()
             .map(view -> BigInteger.TWO.pow(view.end - view.start + 1).subtract(BigInteger.ONE)
                     .shiftLeft(view.start))
-            .reduce(BigInteger.ZERO, (view1, view2) -> view1.or(view2)).bitCount()  ;
+            .reduce(BigInteger.ZERO, BigInteger::or).bitCount()  ;
 
     return result  ;
   }
